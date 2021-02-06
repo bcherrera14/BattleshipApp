@@ -8,51 +8,30 @@ namespace BattleshipApp
         {
             PrintColorMessage(ConsoleColor.Cyan, "Battleship by Bryan Herrera");
 
-            //Create grid
-            string[,] grid = new string[10, 10] { { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" } };
+            //PrintColorMessage(ConsoleColor.Cyan, "Battleship by Bryan Herrera");
 
+            Console.WriteLine("");
+            PrintColorMessage(ConsoleColor.Magenta, "Hello, you have 8 attempts to sink my battleship. Good luck!");
+
+
+
+            //Create grid
+            //string[,] grid = new string[10, 10] { { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" }, { "O", "O", "O", "O", "O", "O", "O", "O", "O", "O" } };
+            string[,] grid = new string[10, 10];
+            //Randomize boat location
             int[,] boatCoordinates = RandomizeShipLocation(grid);
-            
-            
 
             // GAME LOGIC //
-            int userGuesses = 0;
+            int userGuesses = 8;
             int directHit = 0;
-            while (userGuesses < 8) {
+            while (userGuesses > 0) {
                 Console.WriteLine("");
-                //Print grid
-                for (int i = 0; i < grid.GetLength(0); i++)
-                {
-                    string row = "";
-                    for (int j = 0; j < grid.GetLength(1); j++)
-                    {
-                        //row += grid[i, j] + " ";
-                        if(grid[i,j] == "/")
-                        {
-                            //Change text color
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            //Tell user its not a number
-                            Console.Write("/ ");
-                            //Reset text color
-                            Console.ResetColor();
-                        }else if (grid[i, j] == "X")
-                        {
-                            //Change text color
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            //Tell user its not a number
-                            Console.Write("X ");
-                            //Reset text color
-                            Console.ResetColor();
-                        }
-                        else
-                        {
-                            Console.Write(grid[i, j] + " ");
-                        }
-                    }
-                    Console.WriteLine(row);
-                }
+                //Print Grid
+                PrintGrid(grid);
                 Console.WriteLine("");
 
+                //Show how many attempts left
+                PrintColorMessage(ConsoleColor.Magenta, "You have " + userGuesses + " attempts left.");
 
                 //Get user X guess coordinate
                 Console.WriteLine("Enter X Coordinate: ");
@@ -84,9 +63,9 @@ namespace BattleshipApp
                 }
 
                 //Print user guess coordiante
-                //Console.WriteLine("You guessed: " + inputX + " " + inputY);
+                //Console.WriteLine("You guessed: " + inputX + " " + inputY);-
 
-                Console.WriteLine("");
+                Console.Clear();
                 //Reply hit or miss
                 for (int i = 0; i < boatCoordinates.GetLength(0); i++)
                 {
@@ -110,46 +89,20 @@ namespace BattleshipApp
                 {
                     //Console.WriteLine("You Sunk My Battleship!");
                     Console.WriteLine("");
-                    //Print grid
-                    for (int i = 0; i < grid.GetLength(0); i++)
-                    {
-                        string row = "";
-                        for (int j = 0; j < grid.GetLength(1); j++)
-                        {
-                            //row += grid[i, j] + " ";
-                            if (grid[i, j] == "/")
-                            {
-                                //Change text color
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                //Tell user its not a number
-                                Console.Write("/ ");
-                                //Reset text color
-                                Console.ResetColor();
-                            }
-                            else if (grid[i, j] == "X")
-                            {
-                                //Change text color
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                //Tell user its not a number
-                                Console.Write("X ");
-                                //Reset text color
-                                Console.ResetColor();
-                            }
-                            else
-                            {
-                                Console.Write(grid[i, j] + " ");
-                            }
-                        }
-                        Console.WriteLine(row);
-                    }
-                    Console.WriteLine("");
-                    PrintColorMessage(ConsoleColor.Yellow, "You sunk my battleship!");
+                    PrintColorMessage(ConsoleColor.Magenta, "You sunk my battleship!");
                     break;
                 }
 
                 //Increment user guesses
-                userGuesses++;
+                userGuesses--;
             }
+            Console.WriteLine("");
+            PrintGrid(grid);
+            Console.WriteLine("");
+
+            PrintColorMessage(ConsoleColor.Magenta, "GAMEOVER!");
+
+
         }
         //Pring color message
 
@@ -173,7 +126,7 @@ namespace BattleshipApp
 
             int originY = random.Next(0, 9);
 
-            //Console.WriteLine("Boat Origin: X:{0} Y:{1}", originX, originY);
+            Console.WriteLine("Boat Origin: X:{0} Y:{1}", originX, originY);
 
             //Random boat orientation
             string[] orientation = { "horizontal", "vertical" };
@@ -230,6 +183,43 @@ namespace BattleshipApp
                 //continue;
             }
             return number;
+        }
+
+
+        static void PrintGrid(string[,] grid)
+        {
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                string row = "";
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    //row += grid[i, j] + " ";
+                    if (grid[i, j] == "/")
+                    {
+                        //Change text color
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        //Tell user its not a number
+                        Console.Write("/ ");
+                        //Reset text color
+                        Console.ResetColor();
+                    }
+                    else if (grid[i, j] == "X")
+                    {
+                        //Change text color
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        //Tell user its not a number
+                        Console.Write("X ");
+                        //Reset text color
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        //Console.Write(grid[i, j] + " ");
+                        Console.Write("O" + " ");
+                    }
+                }
+                Console.WriteLine(row);
+            }
         }
 
     }
