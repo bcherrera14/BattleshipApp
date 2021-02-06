@@ -1,0 +1,13 @@
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\bin\Debug\netcoreapp3.1\BattleshipApp.exe
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\bin\Debug\netcoreapp3.1\BattleshipApp.deps.json
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\bin\Debug\netcoreapp3.1\BattleshipApp.runtimeconfig.json
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\bin\Debug\netcoreapp3.1\BattleshipApp.runtimeconfig.dev.json
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\bin\Debug\netcoreapp3.1\BattleshipApp.dll
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\bin\Debug\netcoreapp3.1\BattleshipApp.pdb
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\obj\Debug\netcoreapp3.1\BattleshipApp.csprojAssemblyReference.cache
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\obj\Debug\netcoreapp3.1\BattleshipApp.AssemblyInfoInputs.cache
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\obj\Debug\netcoreapp3.1\BattleshipApp.AssemblyInfo.cs
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\obj\Debug\netcoreapp3.1\BattleshipApp.csproj.CoreCompileInputs.cache
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\obj\Debug\netcoreapp3.1\BattleshipApp.dll
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\obj\Debug\netcoreapp3.1\BattleshipApp.pdb
+C:\Users\Bryan\OneDrive\Mastermind Program\projects\fundamentals\BattleshipApp\BattleshipApp\obj\Debug\netcoreapp3.1\BattleshipApp.genruntimeconfig.cache
