@@ -6,10 +6,24 @@ namespace BattleshipApp
     {
         static void Main(string[] args)
         {
-            //Game Setup
-            
-            //Debug show coords
-            //Console.WriteLine("Boat Origin: X:{0} Y:{1}", boatCoordinates[0, 1],  boatCoordinates[0, 0]);
+            //Greet the user
+            PrintColorMessage(ConsoleColor.Cyan, "Welcome to Battleship by Bryan Herrera");
+            Console.WriteLine("");
+            Console.WriteLine("");
+
+            //Rules of the game
+            Console.WriteLine("- You have 8 tries to sink my single battleship.");
+            Console.WriteLine("- You will choose a (x,y) coordinate between 0 and 9 to fire at.");
+            Console.WriteLine("- 5 successful hits will sink my battleship.");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.Write("Ready to play? [Y or N]: ");
+            string answer = Console.ReadLine().ToUpper();
+
+            if (answer != "Y")
+            {
+                return;
+            }
 
             //Game loop
             while (true)
@@ -19,24 +33,7 @@ namespace BattleshipApp
                 string[,] grid = new string[10, 10];
                 //Randomize boat location
                 int[,] boatCoordinates = RandomizeShipLocation(grid);
-                //Greet the user
-                PrintColorMessage(ConsoleColor.Cyan, "Welcome to Battleship By Bryan Herrera");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                //Rules of the game
-                Console.WriteLine("-You will have 8 tries to sink my single battleship.");
-                Console.WriteLine("-You will choose a x,y coordinate between 0 and 9 to fire at.");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("Ready to play? [Y or N]");
-                string answer = Console.ReadLine().ToUpper();
-
-
-                if (answer != "Y")
-                {
-                    return;
-                }
+                
 
                 //Clear colsole before game starts
                 Console.Clear();
@@ -57,7 +54,7 @@ namespace BattleshipApp
                     Console.WriteLine("");
 
                     //Get user X
-                    Console.WriteLine("Enter X Coordinate: ");
+                    Console.Write("Enter X Coordinate: ");
                     string inputX = Console.ReadLine();
 
                     int guessX = 0;
@@ -73,7 +70,7 @@ namespace BattleshipApp
                     Console.WriteLine("");
 
                     //Get user Y
-                    Console.WriteLine("Enter Y Coordinate: ");
+                    Console.Write("Enter Y Coordinate: ");
                     string inputY = Console.ReadLine();
 
                     int guessY = 0;
@@ -120,7 +117,6 @@ namespace BattleshipApp
                 }
 
                 //Show Game Result
-                Console.WriteLine("");
                 PrintGrid(grid);
                 Console.WriteLine("");
 
@@ -164,15 +160,11 @@ namespace BattleshipApp
 
             //Init random boat coordinates
             int originX = random.Next(0, 9);
-
             int originY = random.Next(0, 9);
-
-            Console.WriteLine("Boat Origin: X:{0} Y:{1}", originX, originY);
 
             //Random boat orientation
             string[] orientation = { "horizontal", "vertical" };
             string randomBoatOrientation = orientation[random.Next(orientation.Length)];
-            //Console.WriteLine("Orientation: {0}", randomBoatOrientation);
 
             //Build boat
             int[,] boatCoordinates = new int[5, 2];
@@ -180,7 +172,7 @@ namespace BattleshipApp
             {
                 if (originX > 5)
                 {
-                    originX = originX - 4;
+                    originX -= 4;
                 }
                 boatCoordinates[0, 0] = originY;
                 boatCoordinates[0, 1] = originX;
@@ -194,7 +186,7 @@ namespace BattleshipApp
             {
                 if (originY > 5)
                 {
-                    originY = originY - 4;
+                    originY -= 4;
                 }
                 boatCoordinates[0, 0] = originY;
                 boatCoordinates[0, 1] = originX;
@@ -214,7 +206,6 @@ namespace BattleshipApp
                 string row = "";
                 for (int j = 0; j < grid.GetLength(1); j++)
                 {
-                    //row += grid[i, j] + " ";
                     if (grid[i, j] == "/")
                     {
                         //Change text color
