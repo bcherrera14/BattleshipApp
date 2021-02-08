@@ -6,18 +6,19 @@ namespace BattleshipApp
     {
         static void Main(string[] args)
         {
+            //Game Setup
+            
+            //Debug show coords
+            //Console.WriteLine("Boat Origin: X:{0} Y:{1}", boatCoordinates[0, 1],  boatCoordinates[0, 0]);
 
-            //Application title
-            //PrintColorMessage(ConsoleColor.Cyan, "Battleship by Bryan Herrera");
-            //Console.WriteLine("");
-
-            //Create grid
-            string[,] grid = new string[10, 10];
-            //Randomize boat location
-            int[,] boatCoordinates = RandomizeShipLocation(grid);
-
+            //Game loop
             while (true)
             {
+                Console.Clear();
+                //Create grid
+                string[,] grid = new string[10, 10];
+                //Randomize boat location
+                int[,] boatCoordinates = RandomizeShipLocation(grid);
                 //Greet the user
                 PrintColorMessage(ConsoleColor.Cyan, "Welcome to Battleship By Bryan Herrera");
                 Console.WriteLine("");
@@ -36,29 +37,26 @@ namespace BattleshipApp
                 {
                     return;
                 }
-                
 
                 //Clear colsole before game starts
                 Console.Clear();
 
-
-                // GAME LOGIC //
+                //Game Logic
                 int userGuesses = 8;
                 int directHit = 0;
+
                 while (userGuesses > 0)
                 {
-                    Console.WriteLine("");
-
-
-                    Console.WriteLine("");
-                    //Print Grid
+                    // PrintColorMessage(ConsoleColor.Cyan, "Enter your first location.");
+                    // Console.WriteLine("");
                     PrintGrid(grid);
                     Console.WriteLine("");
 
                     //Show how many attempts left
-                    PrintColorMessage(ConsoleColor.Magenta, "You have " + userGuesses + " attempts left.");
+                    PrintColorMessage(ConsoleColor.Cyan, "Remaining guesses: " + userGuesses);
+                    Console.WriteLine("");
 
-                    //Get user X guess coordinate
+                    //Get user X
                     Console.WriteLine("Enter X Coordinate: ");
                     string inputX = Console.ReadLine();
 
@@ -67,14 +65,14 @@ namespace BattleshipApp
                     if (!int.TryParse(inputX, out guessX) || Int32.Parse(inputX) < 0 || Int32.Parse(inputX) > 9 || inputX == "")
                     {
                         Console.Clear();
-                        //Print error message
-                        //Console.WriteLine("Please enter a number between 0 and 9.");
                         PrintColorMessage(ConsoleColor.Red, "Please enter a number between 0 and 9.");
+                        Console.WriteLine("");
                         continue;
                     }
 
                     Console.WriteLine("");
-                    //Get user Y guess coordinate
+
+                    //Get user Y
                     Console.WriteLine("Enter Y Coordinate: ");
                     string inputY = Console.ReadLine();
 
@@ -83,50 +81,51 @@ namespace BattleshipApp
                     if (!int.TryParse(inputY, out guessY) || Int32.Parse(inputY) < 0 || Int32.Parse(inputY) > 9 || inputY == "")
                     {
                         Console.Clear();
-                        //Print error message
-                        //Console.WriteLine("Please enter a number between 0 and 9.");
                         PrintColorMessage(ConsoleColor.Red, "Please enter a number between 0 and 9.");
+                        Console.WriteLine("");
                         continue;
                     }
 
-                    //Print user guess coordiante
-                    //Console.WriteLine("You guessed: " + inputX + " " + inputY);-
-
                     Console.Clear();
+
                     //Reply hit or miss
                     for (int i = 0; i < boatCoordinates.GetLength(0); i++)
                     {
                         if (boatCoordinates[i, 1] == guessX && boatCoordinates[i, 0] == guessY)
                         {
-                            //Console.WriteLine("Direct Hit!");
                             PrintColorMessage(ConsoleColor.Green, "Direct Hit!");
+                            Console.WriteLine("");
                             grid[boatCoordinates[i, 0], boatCoordinates[i, 1]] = "X";
                             directHit++;
                             break;
                         }
                         if (i == 4)
                         {
-                            //Console.WriteLine("Miss!");
                             PrintColorMessage(ConsoleColor.Red, "Missed!");
+                            Console.WriteLine("");
                             grid[guessY, guessX] = "/";
                         }
                     }
+
                     //If user hits ship 5 times
                     if (directHit == 5)
                     {
-                        //Console.WriteLine("You Sunk My Battleship!");
-                        Console.WriteLine("");
                         PrintColorMessage(ConsoleColor.Magenta, "You sunk my battleship!");
                         break;
                     }
 
-                    //Increment user guesses
+                    //Decrement user guesses
                     userGuesses--;
+
                 }
+
+                //Show Game Result
                 Console.WriteLine("");
                 PrintGrid(grid);
                 Console.WriteLine("");
-                PrintColorMessage(ConsoleColor.Magenta, "Would you like to play again? [Y or N]");
+
+                //Ask to replay game
+                PrintColorMessage(ConsoleColor.Magenta, "Gameover! Would you like to play again? [Y or N]");
                 //Get the answer
                 string replay = Console.ReadLine().ToUpper();
 
@@ -142,7 +141,9 @@ namespace BattleshipApp
                 {
                     return;
                 }
+
             }
+
         }
         //Pring color message
 
@@ -203,28 +204,8 @@ namespace BattleshipApp
                     boatCoordinates[i, 1] = originX;
                 }
             }
-            //Place boat in grid
-            //for (int i = 0; i < boatCoordinates.GetLength(0); i++)
-            //{
-            //    grid[boatCoordinates[i, 0], boatCoordinates[i, 1]] = "X";
-            //}
             return boatCoordinates;
         }
-
-        static int ValidateInput(string input)
-        {
-            int number;
-            //Validate X input
-            if (!int.TryParse(input, out number) || Int32.Parse(input) < 0 || Int32.Parse(input) > 9 || input == "")
-            {
-                //Print error message
-                //Console.WriteLine("Please enter a number between 0 and 9.");
-                PrintColorMessage(ConsoleColor.Red, "Please enter a number between 0 and 9.");
-                //continue;
-            }
-            return number;
-        }
-
 
         static void PrintGrid(string[,] grid)
         {
