@@ -19,7 +19,8 @@ namespace BattleshipApp
                 Console.Clear();
                 string[,] grid = new string[10, 10];
                 int[,] boatCoordinates = RandomizeShipLocation(grid);
-
+                
+                Console.WriteLine("");
                 PrintColorMessage(ConsoleColor.Magenta, "Fire Away!");
                 Console.WriteLine("");
 
@@ -38,6 +39,8 @@ namespace BattleshipApp
                     int userGuessY = ValidateInput("Enter Y Coordinate: ");
 
                     Console.Clear();
+                    Console.WriteLine("");
+
 
                     for (int i = 0; i < boatCoordinates.GetLength(0); i++)
                     {
@@ -60,6 +63,7 @@ namespace BattleshipApp
                     if (directHit == 5)
                     {
                         Console.Clear();
+                        Console.WriteLine("");
                         PrintColorMessage(ConsoleColor.Green, "You sunk my battleship!");
                         Console.WriteLine("");
                     }
@@ -113,8 +117,10 @@ namespace BattleshipApp
         {
             Random random = new Random();
 
-            int originX = random.Next(0, 9);
-            int originY = random.Next(0, 9);
+            //int originX = random.Next(0, 9);
+            //int originY = random.Next(0, 9);
+            int originX = 7;
+            int originY = 5;
 
             string[] orientation = { "horizontal", "vertical" };
             string randomBoatOrientation = orientation[random.Next(orientation.Length)];
