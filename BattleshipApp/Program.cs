@@ -10,27 +10,12 @@ namespace BattleshipApp
     {
         static void Main(string[] args)
         {
-            //Greet the user
-            PrintColorMessage(ConsoleColor.Cyan, "Welcome to Battleship by Bryan Herrera");
-            Console.WriteLine("");
-            Console.WriteLine("");
+            GameInformation();
 
-            //Rules of the game
-            Console.WriteLine("- You have 8 tries to sink my single battleship.");
-            Console.WriteLine("- You will choose a (x,y) coordinate between 0 and 9 to fire at.");
-            Console.WriteLine("- 5 successful hits will sink my battleship.");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.Write("Ready to play? [Y or N]: ");
-            string answer = Console.ReadLine().ToUpper();
-
-            if (answer != "Y")
-            {
-                return;
-            }
+            bool isGameOver = StartGame("Ready to play? [Y or N]: ");
 
             //Game loop
-            while (true)
+            while (!isGameOver)
             {
                 Console.Clear();
                 //Create grid
@@ -92,20 +77,39 @@ namespace BattleshipApp
 
                 }
 
-                
                 PrintGrid(grid, true);
                 Console.WriteLine("");
-                
-                PrintColorMessage(ConsoleColor.Cyan, "Gameover! Would you like to play again? [Y or N]");
-                string replay = Console.ReadLine().ToUpper();
 
-                if (replay != "Y")
-                {
-                    return;
-                }
+                isGameOver = StartGame("Gameover! Would you like to play again? [Y or N]: ");
 
             }
 
+        }
+
+        static void GameInformation()
+        {
+            PrintColorMessage(ConsoleColor.Cyan, "Welcome to Battleship by Bryan Herrera");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("- You have 8 tries to sink my single battleship.");
+            Console.WriteLine("- You will choose a (x,y) coordinate between 0 and 9 to fire at.");
+            Console.WriteLine("- 5 successful hits will sink my battleship.");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            
+        }
+
+        static bool StartGame(string message)
+        {
+            Console.Write(message);
+            string answer = Console.ReadLine().ToUpper();
+            bool isGameOver = false;
+            if (answer != "Y")
+            {
+                isGameOver = true;
+            }
+
+            return isGameOver;
         }
 
         static void PrintColorMessage(ConsoleColor color, string message)
