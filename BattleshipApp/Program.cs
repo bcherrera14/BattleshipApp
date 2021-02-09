@@ -37,6 +37,8 @@ namespace BattleshipApp
 
                 //Clear colsole before game starts
                 Console.Clear();
+                PrintColorMessage(ConsoleColor.Magenta, "Fire Away!");
+                Console.WriteLine("");
 
                 //Game Logic
                 int userGuesses = 8;
@@ -44,8 +46,7 @@ namespace BattleshipApp
 
                 while (userGuesses > 0)
                 {
-                    // PrintColorMessage(ConsoleColor.Cyan, "Enter your first location.");
-                    // Console.WriteLine("");
+                    //ShowShipLocation(grid, boatCoordinates);
                     PrintGrid(grid);
                     Console.WriteLine("");
 
@@ -117,7 +118,8 @@ namespace BattleshipApp
                 }
 
                 //Show Game Result
-                PrintGrid(grid);
+                //PrintGrid(grid);
+                ShowShipLocation(grid, boatCoordinates);
                 Console.WriteLine("");
 
                 //Ask to replay game
@@ -196,6 +198,13 @@ namespace BattleshipApp
                     boatCoordinates[i, 1] = originX;
                 }
             }
+
+            //Place boat in grid
+            for(int i = 0; i < boatCoordinates.GetLength(0); i++)
+            {
+                grid[boatCoordinates[i, 0], boatCoordinates[i, 1]] = "0";
+            }
+
             return boatCoordinates;
         }
 
@@ -208,27 +217,56 @@ namespace BattleshipApp
                 {
                     if (grid[i, j] == "/")
                     {
-                        //Change text color
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        //Tell user its not a number
-                        Console.Write("/ ");
-                        //Reset text color
+                        Console.Write(" / ");
                         Console.ResetColor();
                     }
                     else if (grid[i, j] == "X")
                     {
-                        //Change text color
                         Console.ForegroundColor = ConsoleColor.Red;
-                        //Tell user its not a number
-                        Console.Write("X ");
-                        //Reset text color
+                        Console.Write(" X ");
                         Console.ResetColor();
                     }
                     else
                     {
-                        //Console.Write(grid[i, j] + " ");
-                        Console.Write("O" + " ");
+                        Console.Write(" O ");
                     }
+                }
+                Console.WriteLine(row);
+            }
+        }
+
+        static void ShowShipLocation(string[,] grid, int[,] boatCoordinates)
+        {
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                string row = "";
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (grid[i, j] == "/")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write(" / ");
+                        Console.ResetColor();
+                    }
+                    else if (grid[i, j] == "X")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(" X ");
+                        Console.ResetColor();
+                    }
+                    else if (grid[i, j] == "0")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(" O ");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                      Console.Write(" O ");
+                    }
+
+                    
                 }
                 Console.WriteLine(row);
             }
