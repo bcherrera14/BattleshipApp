@@ -2,6 +2,10 @@
 
 namespace BattleshipApp
 {
+    class BattleShip
+    {
+        
+    }
     class Program
     {
         static void Main(string[] args)
@@ -36,7 +40,6 @@ namespace BattleshipApp
                 
 
                 //Clear colsole before game starts
-                Console.Clear();
                 PrintColorMessage(ConsoleColor.Magenta, "Fire Away!");
                 Console.WriteLine("");
 
@@ -46,50 +49,22 @@ namespace BattleshipApp
 
                 while (userGuesses > 0)
                 {
-                    //ShowShipLocation(grid, boatCoordinates);
-                    PrintGrid(grid);
+                    PrintGrid(grid, false);
                     Console.WriteLine("");
 
                     //Show how many attempts left
                     PrintColorMessage(ConsoleColor.Cyan, "Remaining guesses: " + userGuesses);
                     Console.WriteLine("");
 
-                    //Get user X
-                    Console.Write("Enter X Coordinate: ");
-                    string inputX = Console.ReadLine();
-
-                    int guessX = 0;
-                    //Validate X input
-                    if (!int.TryParse(inputX, out guessX) || Int32.Parse(inputX) < 0 || Int32.Parse(inputX) > 9 || inputX == "")
-                    {
-                        Console.Clear();
-                        PrintColorMessage(ConsoleColor.Red, "Please enter a number between 0 and 9.");
-                        Console.WriteLine("");
-                        continue;
-                    }
-
-                    Console.WriteLine("");
-
-                    //Get user Y
-                    Console.Write("Enter Y Coordinate: ");
-                    string inputY = Console.ReadLine();
-
-                    int guessY = 0;
-                    //Validate Y input
-                    if (!int.TryParse(inputY, out guessY) || Int32.Parse(inputY) < 0 || Int32.Parse(inputY) > 9 || inputY == "")
-                    {
-                        Console.Clear();
-                        PrintColorMessage(ConsoleColor.Red, "Please enter a number between 0 and 9.");
-                        Console.WriteLine("");
-                        continue;
-                    }
+                    int userGuessX = ValidateInput("Enter X Coordinate: ");
+                    int userGuessY = ValidateInput("Enter Y Coordinate: ");
 
                     Console.Clear();
 
                     //Reply hit or miss
                     for (int i = 0; i < boatCoordinates.GetLength(0); i++)
                     {
-                        if (boatCoordinates[i, 1] == guessX && boatCoordinates[i, 0] == guessY)
+                        if (boatCoordinates[i, 1] == userGuessX && boatCoordinates[i, 0] == userGuessY)
                         {
                             PrintColorMessage(ConsoleColor.Green, "Direct Hit!");
                             Console.WriteLine("");
@@ -101,7 +76,7 @@ namespace BattleshipApp
                         {
                             PrintColorMessage(ConsoleColor.Red, "Missed!");
                             Console.WriteLine("");
-                            grid[guessY, guessX] = "/";
+                            grid[userGuessY, userGuessX] = "/";
                         }
                     }
 
@@ -117,25 +92,14 @@ namespace BattleshipApp
 
                 }
 
-                //Show Game Result
-                //PrintGrid(grid);
-                ShowShipLocation(grid, boatCoordinates);
+                
+                PrintGrid(grid, true);
                 Console.WriteLine("");
-
-                //Ask to replay game
-                PrintColorMessage(ConsoleColor.Magenta, "Gameover! Would you like to play again? [Y or N]");
-                //Get the answer
+                
+                PrintColorMessage(ConsoleColor.Cyan, "Gameover! Would you like to play again? [Y or N]");
                 string replay = Console.ReadLine().ToUpper();
 
-                if (replay == "Y")
-                {
-                    continue;
-                }
-                else if (replay == "N")
-                {
-                    return;
-                }
-                else
+                if (replay != "Y")
                 {
                     return;
                 }
@@ -143,15 +107,11 @@ namespace BattleshipApp
             }
 
         }
-        //Pring color message
 
         static void PrintColorMessage(ConsoleColor color, string message)
         {
-            //Change text color
             Console.ForegroundColor = color;
-            //Tell user its not a number
             Console.WriteLine(message);
-            //Reset text color
             Console.ResetColor();
         }
 
@@ -208,7 +168,7 @@ namespace BattleshipApp
             return boatCoordinates;
         }
 
-        static void PrintGrid(string[,] grid)
+        static void PrintGrid(string[,] grid, bool showShip)
         {
             for (int i = 0; i < grid.GetLength(0); i++)
             {
@@ -218,59 +178,53 @@ namespace BattleshipApp
                     if (grid[i, j] == "/")
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.Write(" / ");
+                        Console.Write(" /");
                         Console.ResetColor();
                     }
                     else if (grid[i, j] == "X")
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(" X ");
+                        Console.Write(" X");
                         Console.ResetColor();
                     }
-                    else
-                    {
-                        Console.Write(" O ");
-                    }
-                }
-                Console.WriteLine(row);
-            }
-        }
-
-        static void ShowShipLocation(string[,] grid, int[,] boatCoordinates)
-        {
-            for (int i = 0; i < grid.GetLength(0); i++)
-            {
-                string row = "";
-                for (int j = 0; j < grid.GetLength(1); j++)
-                {
-                    if (grid[i, j] == "/")
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.Write(" / ");
-                        Console.ResetColor();
-                    }
-                    else if (grid[i, j] == "X")
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(" X ");
-                        Console.ResetColor();
-                    }
-                    else if (grid[i, j] == "0")
+                    else if (grid[i, j] == "0" && showShip)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(" O ");
+                        Console.Write(" O");
                         Console.ResetColor();
                     }
                     else
                     {
-                      Console.Write(" O ");
+                        Console.Write(" O");
                     }
-
-                    
                 }
                 Console.WriteLine(row);
             }
         }
 
+        static int ValidateInput(string message)
+        {
+            bool isValid = false;
+            string input;
+            int userGuess = 0;
+            while (!isValid)
+            {
+                Console.Write(message);
+                input = Console.ReadLine();
+
+                if (!int.TryParse(input, out userGuess) || Int32.Parse(input) < 0 || Int32.Parse(input) > 9 || input == "")
+                {
+                    Console.WriteLine("");
+                    PrintColorMessage(ConsoleColor.Red, "Please enter a number between 0 and 9.");
+                    Console.WriteLine("");
+                    continue;
+                }
+
+                isValid = true;
+            }
+           
+            Console.WriteLine("");
+            return userGuess;
+        }
     }
 }
