@@ -1,6 +1,6 @@
 # Battleship Console App
 
-*A virtual version of the classic battship board game.*
+*A virtual version of the classic battleship board game.*
 
 <img src="./battleship_v1.gif" alt="alt text" width="700px">
 
