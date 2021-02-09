@@ -8,36 +8,29 @@ namespace BattleshipApp
     }
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             GameInformation();
 
             bool isGameOver = StartGame("Ready to play? [Y or N]: ");
 
-            //Game loop
             while (!isGameOver)
             {
                 Console.Clear();
-                //Create grid
                 string[,] grid = new string[10, 10];
-                //Randomize boat location
                 int[,] boatCoordinates = RandomizeShipLocation(grid);
-                
 
-                //Clear colsole before game starts
                 PrintColorMessage(ConsoleColor.Magenta, "Fire Away!");
                 Console.WriteLine("");
 
-                //Game Logic
                 int userGuesses = 8;
                 int directHit = 0;
 
-                while (userGuesses > 0)
+                while (userGuesses > 0 && directHit < 5)
                 {
                     PrintGrid(grid, false);
                     Console.WriteLine("");
 
-                    //Show how many attempts left
                     PrintColorMessage(ConsoleColor.Cyan, "Remaining guesses: " + userGuesses);
                     Console.WriteLine("");
 
@@ -46,7 +39,6 @@ namespace BattleshipApp
 
                     Console.Clear();
 
-                    //Reply hit or miss
                     for (int i = 0; i < boatCoordinates.GetLength(0); i++)
                     {
                         if (boatCoordinates[i, 1] == userGuessX && boatCoordinates[i, 0] == userGuessY)
@@ -65,14 +57,13 @@ namespace BattleshipApp
                         }
                     }
 
-                    //If user hits ship 5 times
                     if (directHit == 5)
                     {
-                        PrintColorMessage(ConsoleColor.Magenta, "You sunk my battleship!");
-                        break;
+                        Console.Clear();
+                        PrintColorMessage(ConsoleColor.Green, "You sunk my battleship!");
+                        Console.WriteLine("");
                     }
 
-                    //Decrement user guesses
                     userGuesses--;
 
                 }
@@ -96,7 +87,6 @@ namespace BattleshipApp
             Console.WriteLine("- 5 successful hits will sink my battleship.");
             Console.WriteLine("");
             Console.WriteLine("");
-            
         }
 
         static bool StartGame(string message)
@@ -121,18 +111,14 @@ namespace BattleshipApp
 
         static int[,] RandomizeShipLocation(string[,] grid)
         {
-            //Create a new random object
             Random random = new Random();
 
-            //Init random boat coordinates
             int originX = random.Next(0, 9);
             int originY = random.Next(0, 9);
 
-            //Random boat orientation
             string[] orientation = { "horizontal", "vertical" };
             string randomBoatOrientation = orientation[random.Next(orientation.Length)];
 
-            //Build boat
             int[,] boatCoordinates = new int[5, 2];
             if (randomBoatOrientation == "horizontal")
             {
@@ -163,7 +149,6 @@ namespace BattleshipApp
                 }
             }
 
-            //Place boat in grid
             for(int i = 0; i < boatCoordinates.GetLength(0); i++)
             {
                 grid[boatCoordinates[i, 0], boatCoordinates[i, 1]] = "0";
@@ -172,7 +157,7 @@ namespace BattleshipApp
             return boatCoordinates;
         }
 
-        static void PrintGrid(string[,] grid, bool showShip)
+        static void PrintGrid(string[,] grid, bool showShipLocation)
         {
             for (int i = 0; i < grid.GetLength(0); i++)
             {
@@ -191,7 +176,7 @@ namespace BattleshipApp
                         Console.Write(" X");
                         Console.ResetColor();
                     }
-                    else if (grid[i, j] == "0" && showShip)
+                    else if (grid[i, j] == "0" && showShipLocation)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write(" O");
