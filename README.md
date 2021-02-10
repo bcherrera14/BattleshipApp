@@ -2,7 +2,7 @@
 
 *A virtual version of the classic battleship board game.*
 
-<img src="./battleship_v1.gif" alt="alt text" width="700px">
+<img src="./battleship_v2.gif" alt="alt text" width="700px">
 
 ## Summary
 
