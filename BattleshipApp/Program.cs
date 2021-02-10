@@ -117,10 +117,8 @@ namespace BattleshipApp
         {
             Random random = new Random();
 
-            //int originX = random.Next(0, 9);
-            //int originY = random.Next(0, 9);
-            int originX = 7;
-            int originY = 5;
+            int originX = random.Next(0, 9);
+            int originY = random.Next(0, 9);
 
             string[] orientation = { "horizontal", "vertical" };
             string randomBoatOrientation = orientation[random.Next(orientation.Length)];
